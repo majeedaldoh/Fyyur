@@ -28,14 +28,14 @@ class Venue(db.Model):
     show = db.relationship('Show', backref='venue',cascade='delete,save-update',lazy=True)
 
     def create(self):
-        db.session.add()
+        db.session.add(self)
         db.commit()
 
     def update(self):
         db.session.commit()
     
     def delete(self):
-        db.session.delete()
+        db.session.delete(self)
         db.session.commit()
 
     
@@ -64,15 +64,12 @@ class Artist(db.Model):
     show = db.relationship('Show', backref='artist', cascade='delete,save-update', lazy=True)
 
     def create(self):
-        db.session.add()
+        db.session.add(self)
         db.commit()
 
     def update(self):
         db.session.commit()
-    
-    def delete(self):
-        db.session.delete()
-        db.session.commit()
+
     
 # TODO Implement Show and Artist models, and complete all model relationships and properties, as a database migration.
 
@@ -84,5 +81,5 @@ class Show(db.Model):
     start_time = db.Column(db.DateTime, default=datetime.datetime, nullable = False)
 
     def create(self):
-        db.session.add()
+        db.session.add(self)
         db.session.commit()

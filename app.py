@@ -228,7 +228,7 @@ def create_venue_submission():
   # TODO: modify data to be the data object returned from db insertion
 
   # form validation
-  form = VenueForm()
+  form = VenueForm(request.form)
   if not form.validate():
     for fieldName, errorMessage in form.errors.items():
       flash(errorMessage)
@@ -266,7 +266,7 @@ def create_venue_submission():
     flash('venue' + request.form['name'] +'has been added successfully!')
   except BaseException:
     db.session.rollback()
-    flash('an error accured venue '+ request.form['name'] +'could not been added')
+    flash('an error accured venue '+ request.form['name'] +' could not been added')
   finally:
     db.session.close()
   return render_template('pages/home.html')
@@ -533,7 +533,7 @@ def create_artist_submission():
   # called upon submitting the new artist listing form
   # TODO: insert form data as a new Venue record in the db, instead
   # TODO: modify data to be the data object returned from db insertion
-  form = ArtistForm()
+  form = ArtistForm(request.form)
 
   if not form.validate():
     for fieldName, errorMessage in form.errors.items():
@@ -655,6 +655,7 @@ if not app.debug:
 #----------------------------------------------------------------------------#
 
 # Default port:
+
 if __name__ == '__main__':
     app.run()
 
