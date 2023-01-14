@@ -15,7 +15,7 @@ from logging import Formatter, FileHandler
 from flask_wtf import Form
 from forms import * 
 from models import db, Venue, Show, Artist
-from flask_wtf.csrf import CsrfProtect
+from flask_wtf.csrf import CSRFProtect
 #----------------------------------------------------------------------------#
 # App Config.
 #----------------------------------------------------------------------------#
@@ -25,7 +25,8 @@ app.config.from_object('config')
 moment = Moment(app)
 db.init_app(app)
 migrate = Migrate(app, db)
-db = SQLAlchemy(app ,db)
+db = SQLAlchemy(app)
+csrf = CSRFProtect()
 # TODO: connect to a local postgresql database
 # db = SQLAlchemy(app, db)
 #----------------------------------------------------------------------------#
@@ -423,7 +424,7 @@ def edit_artist(artist_id):
   artist = Artist.query.get(artist_id)
 
   form = ArtistForm()
-  form.name.data = artist.name
+  form.name.data = artist.name 
   form.city.data = artist.city
   form.state.data = artist.state
   form.phone.data = artist.phone
@@ -651,7 +652,7 @@ if not app.debug:
     app.logger.info('errors')
 
 #----------------------------------------------------------------------------#
-# Launch.
+# Launch.  
 #----------------------------------------------------------------------------#
 
 # Default port:
